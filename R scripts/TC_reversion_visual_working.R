@@ -29,7 +29,11 @@ pdf(file="TC_variants.pdf")
 ggplot(df1.long, aes(x=passage, y=frequency, group=variant, color= variant)) +
   geom_point(show.legend=FALSE) +
   geom_line(show.legend=FALSE) +
-  facet_wrap(vars(variant))
+  facet_wrap(vars(variant))+
+  theme_bw()+
+  theme(text = element_text(size=10, family="sans")) + 
+  xlab ("Passage") + 
+  ylab ("Variant Frequency") 
 dev.off()
 
 ##want to show the reversion of these variants in vivo 
@@ -57,28 +61,23 @@ df2.long <- melt(setDT(df2), id.vars=c("variant", "cds"), variable.name="passage
 #get the order right for passages
 df2.long <- df2.long %>%mutate(passage = fct_relevel(passage, "1","2","3", "Dogs"))
 
-#plot
-pdf(file="TC_variants_and_dogs.pdf")
-ggplot(df2.long, aes(x=passage, y=frequency, group=variant)) +
-  geom_point(show.legend=FALSE) +
-  geom_point(data=df_highlight, aes(x=passage, y=frequency,color=passage),show.legend=FALSE) +
-  facet_wrap(vars(variant))
-dev.off()
-
 #pull out dogs in case you want to highligh as a different color
-#df_highlight <- df2.long %>%
-#filter(passage=="Dogs")
-
-#pull out inoculums to connect with a line/color
-df_SARS2 <- df2.long %>%
+df_highlight <- df2.long %>%
+  #filter(passage=="Dogs")
+  
+  #pull out inoculums to connect with a line/color
+  df_SARS2 <- df2.long %>%
   filter(passage!="Dogs")
 
 #plot
 pdf(file="TC_variants_and_dogs.pdf")
 ggplot(df2.long, aes(x=passage, y=frequency, group=variant)) +
-  geom_point(show.legend=FALSE) +
-  geom_point(data=df_highlight, aes(x=passage,y=frequency), 
-             color='red')+
+  geom_point(data=df_SARS2, aes(x=passage,y=frequency), show.legend=FALSE) +
+  geom_point(data=df_highlight, aes(x=passage,y=frequency), color='red', position=position_jitter(w=0.1,h=0))+
   geom_line(data=df_SARS2)+
-  facet_wrap(vars(variant))
+  facet_wrap(vars(variant)) +
+  theme_bw()+
+  theme(text = element_text(size=10, family="sans")) + 
+  xlab ("Passage") + 
+  ylab ("Variant Frequency") 
 dev.off()
