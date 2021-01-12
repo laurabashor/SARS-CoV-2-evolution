@@ -3,6 +3,7 @@
 #load libraries
 library(tidyverse)
 library(data.table)
+library(ggplot2)
 
 #load in cleaned data with replicates combined
 df <- as.data.frame(variant_table_cleaned_combined)
@@ -10,7 +11,7 @@ df <- as.data.frame(variant_table_cleaned_combined)
 #NAs to 0s for plotting
 df[is.na(df)] <- 0
 
-#first graph just the inoculums
+###first graph just the inoculums
 df1 <- df[, c("variant", "cds", "SARS2_P1","SARS2_P2","SARS2_P3")]
 
 #rename passages as 1, 2, 3
@@ -36,48 +37,51 @@ ggplot(df1.long, aes(x=passage, y=frequency, group=variant, color= variant)) +
   ylab ("Variant Frequency") 
 dev.off()
 
-##want to show the reversion of these variants in vivo 
-#working with just inoculums and dogs for now
-df2 <- df[, c("variant", "cds", "D46", "D47", "D48", "SARS2_P1","SARS2_P2","SARS2_P3")]
+##want show the reversion of these variants in vivo for all the animal species
 
-#rename passages as 1, 2, 3
-names(df2) <- gsub("SARS2_P", "", names(df2))
+df3 <- df %>%
+  select(!c("position", "N_or_S"))
 
 #pull out just TC mutations that went to fixation
-df2 <- df2 %>%
+df3 <- df3 %>%
   filter(variant %in% c("D135E", "D215H", "R685H", "T7I","S194T"))
 
-#make all dogs into one passage
-names(df2) <- gsub("D46|D47|D48","Dogs",names(df2))
-
 #make data long and skinny for plotting, rename value as frequency
-#can do this with data.table melt or tidyr pivot_longer
+df3.long <- df3 %>%
+  pivot_longer(!c(variant,cds), names_to= "dataset", values_to ="Frequency")
 
-df2.long <- df2 %>%
-  pivot_longer(!c(variant, cds), names_to= "passage", values_to ="frequency")
-
-df2.long <- melt(setDT(df2), id.vars=c("variant", "cds"), variable.name="passage", value.name="frequency")
+df3.long <- df3.long %>%  
+  mutate(Passage = case_when(grepl("C", dataset) ~ "Cats",
+                             grepl("D", dataset) ~"Dogs",
+                             grepl("H", dataset) ~"Hamsters",
+                             grepl("F", dataset) ~"Ferret",
+                             grepl("P1", dataset) ~"P1",
+                             grepl("P2", dataset) ~"P2",
+                             grepl("P3", dataset) ~"P3"))
 
 #get the order right for passages
-df2.long <- df2.long %>%mutate(passage = fct_relevel(passage, "1","2","3", "Dogs"))
+df3.long <- df3.long %>%
+  mutate(Passage = fct_relevel(Passage, "P1","P2","P3", "Cats", "Dogs","Hamsters","Ferret"))
+#df3.long$Passage <- factor(df3.long$Passage, levels = c("P1","P2","P3", "Cats", "Dogs","Hamsters","Ferret"))
 
-#pull out dogs in case you want to highligh as a different color
-df_highlight <- df2.long %>%
-  #filter(passage=="Dogs")
-  
-  #pull out inoculums to connect with a line/color
-  df_SARS2 <- df2.long %>%
-  filter(passage!="Dogs")
+#colors <- c("P1"="black","P2"="black","P3"="black", "Cats"="red", "Dogs"="blue","Hamsters"="green","Ferret"="purple")
+# animals <- df3.long %>%
+#   filter(Passage=="Cats"|Passage=="Dogs"|Passage=="Hamsters"|Passage=="Ferret")
 
 #plot
-pdf(file="TC_variants_and_dogs.pdf")
-ggplot(df2.long, aes(x=passage, y=frequency, group=variant)) +
-  geom_point(data=df_SARS2, aes(x=passage,y=frequency), show.legend=FALSE) +
-  geom_point(data=df_highlight, aes(x=passage,y=frequency), color='red', position=position_jitter(w=0.1,h=0))+
-  geom_line(data=df_SARS2)+
-  facet_wrap(vars(variant)) +
+pdf(file="TC_variants_reversion.pdf", width=10, height=10)
+ggplot() +
+  geom_point(data=df3.long, aes(x=Passage, y=Frequency, group=variant), show.legend=FALSE) +
+  geom_line(data=df3.long %>%
+              filter(Passage == "P1"|Passage == "P2"|Passage == "P3"), aes(x=Passage, y=Frequency, group=variant), show.legend=FALSE)+
+  geom_boxplot(data=df3.long  %>%
+                 filter(Passage=="Cats"|Passage=="Dogs"|Passage=="Hamsters"|Passage=="Ferret"), aes(x=Passage, y=Frequency))+
+  geom_jitter(data=df3.long  %>%
+                filter(Passage=="Cats"|Passage=="Dogs"|Passage=="Hamsters"|Passage=="Ferret"), aes(x=Passage, y=Frequency, group=variant),position=position_jitter(w=0.1))+
+  #scale_colour_manual(values=colors)+
+  facet_wrap(vars(variant, cds), scales='free_x') +
   theme_bw()+
-  theme(text = element_text(size=10, family="sans")) + 
+  theme(text = element_text(size=12, family="sans")) + 
   xlab ("Passage") + 
   ylab ("Variant Frequency") 
 dev.off()
