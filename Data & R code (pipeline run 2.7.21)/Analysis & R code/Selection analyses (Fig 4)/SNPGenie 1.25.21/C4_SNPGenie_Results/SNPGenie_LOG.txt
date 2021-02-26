@@ -1,0 +1,4 @@
+file	product	site	LOG
+NA	NA	NA	SNPGenie initiated at local time Wed Feb  3 10:06:33 2021
+vcfs_1.25.21/Cat_4_R.vcf	orf1ab	16843	No SNPs in >=1000 contiguous codons. If this was unexpected, you may need to specify Unix (\n) newline characters! See Troubleshooting
+NA	NA	NA	SNPGenie completed at local time Wed Feb  3 10:06:47 2021. The process took 14.00 secs, i.e., 0 mins and 14.00 secs

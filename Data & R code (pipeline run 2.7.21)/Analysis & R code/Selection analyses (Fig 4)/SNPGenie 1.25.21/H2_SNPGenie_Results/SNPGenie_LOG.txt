@@ -1,0 +1,5 @@
+file	product	site	LOG
+NA	NA	NA	SNPGenie initiated at local time Mon Jan 25 08:30:26 2021
+vcfs_1.25.21/Hamster_2_R.vcf	orf1ab	11240	No SNPs in >=1000 contiguous codons. If this was unexpected, you may need to specify Unix (\n) newline characters! See Troubleshooting
+vcfs_1.25.21/Hamster_2_R.vcf	orf1ab	16843	No SNPs in >=1000 contiguous codons. If this was unexpected, you may need to specify Unix (\n) newline characters! See Troubleshooting
+NA	NA	NA	SNPGenie completed at local time Mon Jan 25 08:30:39 2021. The process took 13.00 secs, i.e., 0 mins and 13.00 secs

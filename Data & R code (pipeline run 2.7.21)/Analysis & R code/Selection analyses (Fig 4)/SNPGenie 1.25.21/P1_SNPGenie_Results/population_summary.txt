@@ -1,0 +1,2 @@
+file	sites	sites_coding	sites_noncoding	pi	pi_coding	pi_noncoding	N_sites	S_sites	piN	piS	mean_dN_vs_ref	mean_dS_vs_ref	mean_gdiv_polymorphic	mean_N_gdiv	mean_S_gdiv	mean_gdiv	sites_polymorphic	mean_gdiv_coding_poly	sites_coding_poly	mean_gdiv_noncoding_poly	sites_noncoding_poly
+vcfs_1.25.21/Passage_1_R.vcf	29882	29102	780	3.17982843490077e-05	3.26505509214847e-05	0	22341.2722129995	6761.72778699999	4.25309858748406e-05	0	2.38582653180267e-05	0	0.157884188872667	0.157884188872667	*	3.17015304610133e-05	6	0.157884188872667	6	*	0

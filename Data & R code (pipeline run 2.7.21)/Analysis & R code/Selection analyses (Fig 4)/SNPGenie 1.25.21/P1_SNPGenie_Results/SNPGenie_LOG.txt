@@ -1,0 +1,6 @@
+file	product	site	LOG
+NA	NA	NA	SNPGenie initiated at local time Mon Jan 25 08:31:09 2021
+vcfs_1.25.21/Passage_1_R.vcf	S	25205	No SNPs in >=1000 contiguous codons. If this was unexpected, you may need to specify Unix (\n) newline characters! See Troubleshooting
+vcfs_1.25.21/Passage_1_R.vcf	orf1ab	3263	No SNPs in >=1000 contiguous codons. If this was unexpected, you may need to specify Unix (\n) newline characters! See Troubleshooting
+vcfs_1.25.21/Passage_1_R.vcf	orf1ab	8456	No SNPs in >=1000 contiguous codons. If this was unexpected, you may need to specify Unix (\n) newline characters! See Troubleshooting
+NA	NA	NA	SNPGenie completed at local time Mon Jan 25 08:31:22 2021. The process took 13.00 secs, i.e., 0 mins and 13.00 secs

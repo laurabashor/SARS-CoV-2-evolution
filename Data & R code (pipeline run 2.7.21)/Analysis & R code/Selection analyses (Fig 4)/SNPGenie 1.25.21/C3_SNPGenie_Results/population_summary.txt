@@ -1,0 +1,2 @@
+file	sites	sites_coding	sites_noncoding	pi	pi_coding	pi_noncoding	N_sites	S_sites	piN	piS	mean_dN_vs_ref	mean_dS_vs_ref	mean_gdiv_polymorphic	mean_N_gdiv	mean_S_gdiv	mean_gdiv	sites_polymorphic	mean_gdiv_coding_poly	sites_coding_poly	mean_gdiv_noncoding_poly	sites_noncoding_poly
+vcfs_1.25.21/Cat_3_R.vcf	29882	29102	780	0.00017342797294551	0.000178076238318938	0	22341.3499379995	6761.65006199999	0.000206158560894868	8.52623443397483e-05	0.000165144794544313	4.83429176450813e-05	0.184923333799357	0.1917336335475	0.1440615353105	0.000173276666434041	28	0.184923333799357	28	*	0

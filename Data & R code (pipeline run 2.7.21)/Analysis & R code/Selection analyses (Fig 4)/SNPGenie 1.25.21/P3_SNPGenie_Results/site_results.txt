@@ -1,0 +1,9 @@
+file	product	site	ref_nt	maj_nt	position_in_codon	overlapping_ORFs	codon_start_site	codon	pi	gdiv	class_vs_ref	class	coverage	A	C	G	T
+vcfs_1.25.21/Passage_3_R.vcf	M	26542	C	T	2	0	26541	ACT	0.0778126308706736	0.0777617729419999	Nonsynonymous	Nonsynonymous	1530	0	62.00019	0	1467.99981
+vcfs_1.25.21/Passage_3_R.vcf	N	28853	T	A	1	0	28853	TCA	0.060266399969182	0.0602618287919998	Nonsynonymous	Nonsynonymous	13184	12774.003968	0	0	409.996031999999
+vcfs_1.25.21/Passage_3_R.vcf	S	22205	G	C	1	0	22205	GAT	0.0733845823264496	0.073359596088	Nonsynonymous	Nonsynonymous	2937	0	2825.000442	111.999558	0
+vcfs_1.25.21/Passage_3_R.vcf	S	23616	G	A	2	0	23615	CGT	0.120393604018587	0.120367617918	Nonsynonymous	Nonsynonymous	4633	4335.000807	0	297.999193	0
+vcfs_1.25.21/Passage_3_R.vcf	orf1ab	2071	A	A	3	0	2069	ACA	0.0708962846769076	0.070887814392	Synonymous	Synonymous	8370	8062.00074	0	307.99926	0
+vcfs_1.25.21/Passage_3_R.vcf	orf1ab	4668	C	C	2	0	4667	TCT	0.146329365079365	0.14404296875	Nonsynonymous	Nonsynonymous	64	0	59	0	5
+vcfs_1.25.21/Passage_3_R.vcf	orf1ab	13845	T	G	3	0	13843	GAT	0.11071459599024	0.110701003038	Nonsynonymous	Nonsynonymous	8145	0	0	7666.000695	478.999305
+vcfs_1.25.21/Passage_3_R.vcf	orf1ab	19338	A	A	3	0	19336	AAA	0.200235471940373	0.2000284032	Synonymous	Synonymous	967	857.99976	0	109.00024	0

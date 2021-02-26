@@ -1,0 +1,2 @@
+file	sites	sites_coding	sites_noncoding	pi	pi_coding	pi_noncoding	N_sites	S_sites	piN	piS	mean_dN_vs_ref	mean_dS_vs_ref	mean_gdiv_polymorphic	mean_N_gdiv	mean_S_gdiv	mean_gdiv	sites_polymorphic	mean_gdiv_coding_poly	sites_coding_poly	mean_gdiv_noncoding_poly	sites_noncoding_poly
+vcfs_1.25.21/Dog_3_R.vcf	29882	29102	780	0.000225334658101562	0.000231374141069029	0	22341.3329273328	6761.66707266666	0.000261508065634503	0.000131773937742288	0.000271185162483647	9.91739156621234e-05	0.320154520536286	0.324019355688	0.296965509626	0.000224993137382438	21	0.320154520536286	21	*	0

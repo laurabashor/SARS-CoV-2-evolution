@@ -1,0 +1,2 @@
+file	sites	sites_coding	sites_noncoding	pi	pi_coding	pi_noncoding	N_sites	S_sites	piN	piS	mean_dN_vs_ref	mean_dS_vs_ref	mean_gdiv_polymorphic	mean_N_gdiv	mean_S_gdiv	mean_gdiv	sites_polymorphic	mean_gdiv_coding_poly	sites_coding_poly	mean_gdiv_noncoding_poly	sites_noncoding_poly
+vcfs_1.25.21/Hamster_2_R.vcf	29882	29102	780	0.000110165264980748	0.00011311794543862	0	22341.5141336662	6761.48586633332	0.00014734715062101	0	0.000156752401786536	0	0.234930337456286	0.234930337456286	*	0.000110067088025835	14	0.234930337456286	14	*	0
