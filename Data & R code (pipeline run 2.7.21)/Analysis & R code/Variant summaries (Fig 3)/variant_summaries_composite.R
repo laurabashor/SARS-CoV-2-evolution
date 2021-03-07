@@ -44,9 +44,6 @@ p1 <- ggplot(richness, aes(x=species, y=n)) +
         axis.title.y=element_text(size=14))
 
 p1
-# pdf("p1.pdf")
-# p1
-# dev.off()
 
 compare_means(n~species, data=richness) #no significant difference between any of the animals doing t-tests
 aov <- aov(n~species, data=richness)
@@ -60,7 +57,6 @@ cohorts <- richness %>%
 
 #paired, tailed (alternative: expect one to be bigger than the other)
 t.test(cohorts$cohort, cohorts$n, paired=TRUE, alternative="less") #p=0.01162
-
 
 
 #(2)
@@ -228,10 +224,6 @@ p2 <- ggarrange(pA, pB, ncol=1, nrow=2, labels=c("(a)", "(b)"),
 
 p2
 
-# pdf("p2.pdf")
-# p2
-# dev.off()
-
 #now put in distribution plot 
 
 #count every single observation of all variants by CDS
@@ -266,72 +258,53 @@ p3
 lm <- lm(proportion_of_variants~proportion_of_genome, count_all)
 summary(lm) #R-squared = 0.6876, p=4.348e-05
 
+#make a blank plot for the fourth panel
+#to insert spike 3D visualization made with UCSF chimera
+
+p4 <- ggplot() +
+  geom_blank() +
+  theme_classic() +
+  theme(axis.line = element_blank())
+
+##finally put them all together
+
+pdf("Variant_summary_plot.pdf", width=11, height=8)
+ggarrange(p1,p2,p3,p4, ncol=2, nrow=2, labels="AUTO")
+dev.off()
+
+
 #finally, look at whether variants were found in only one species vs in 2,3, or all 4
 #only one variant that wasn't a TC variant was found in all 4 species
 #do this for animal variants not found in the inoculum
-
-df3 <- df.filtered %>%
-  pivot_longer(!c(reference_sequence, position, gene, indel,variant, reference_base, variant_base, effect), names_to= "dataset_ID", values_to ="frequency")%>%
-  mutate(Animal = case_when(grepl("C", dataset_ID) ~ "Cats",
-                            grepl("D", dataset_ID) ~"Dogs",
-                            grepl("H", dataset_ID) ~"Hamsters",
-                            grepl("F", dataset_ID) ~"Ferret")) %>%
-  filter(dataset_ID != "Passage_1") %>%
-  filter(dataset_ID != "Passage_2") %>%
-  filter(dataset_ID != "Passage_3") %>%
-  na.omit(df3)
-
-number_of_species <- df3 %>%
-  group_by(variant)%>%
-  count(Animal) %>%
-  count(variant, name="number_of_species") %>% #now we have the count for how many variants are found in 1, 2, 3, or 4 animal species, we need to summarize it
-  group_by(number_of_species) %>%
-  tally() %>%
-  mutate(percentage=(n/sum(n)*100))%>%
-  mutate(type="not_in_inoc")
 # 
-# #NOTE: this plot is only for variants not detected in the inoculum
+# df3 <- df.filtered %>%
+#   pivot_longer(!c(reference_sequence, position, gene, indel,variant, reference_base, variant_base, effect), names_to= "dataset_ID", values_to ="frequency")%>%
+#   mutate(Animal = case_when(grepl("C", dataset_ID) ~ "Cats",
+#                             grepl("D", dataset_ID) ~"Dogs",
+#                             grepl("H", dataset_ID) ~"Hamsters",
+#                             grepl("F", dataset_ID) ~"Ferret")) %>%
+#   filter(dataset_ID != "Passage_1") %>%
+#   filter(dataset_ID != "Passage_2") %>%
+#   filter(dataset_ID != "Passage_3") %>%
+#   na.omit(df3)
+# 
+# number_of_species <- df3 %>%
+#   group_by(variant)%>%
+#   count(Animal) %>%
+#   count(variant, name="number_of_species") %>% #now we have the count for how many variants are found in 1, 2, 3, or 4 animal species, we need to summarize it
+#   group_by(number_of_species) %>%
+#   tally() %>%
+#   mutate(percentage=(n/sum(n)*100))%>%
+#   mutate(type="not_in_inoc")
+# # 
+# #this is how you can plot this 
+# #not using this plot
 # p4 <-ggplot(number_of_species, aes(x=number_of_species, y=n, fill=factor(number_of_species))) +
 #   geom_bar(stat="identity")+
 #   theme_classic()+
 #   labs(x= "Number of Species", y="Number of Variants")+
 #   theme(axis.title=element_text(size=16),
 #          axis.text=element_text(size=14), legend.position="none")
-
-# pdf("p4.pdf")
-# p4
-# dev.off()
-
-
-#finally put them all together
-
-pdf("Variant_summary_plot.pdf", width=11, height=8)
-ggarrange(p1,p2,p3, ncol=2, nrow=2, labels="AUTO")
-dev.off()
-
-
-# library(grid)
-# # Move to a new page
-# grid.newpage()
-# # Create layout : nrow = 3, ncol = 2
-# pushViewport(viewport(layout = grid.layout(nrow = 2, ncol = 2)))
-# # A helper function to define a region on the layout
-# define_region <- function(row, col){
-#   viewport(layout.pos.row = row, layout.pos.col = col)
-# } 
-# 
-# # Arrange the plots
-# print(p1, vp = define_region(row = 1, col = 1))
-# print(p2, vp= define_region(row = 1, col = 2))
-# print(p3, vp = define_region(row = 2, col = 1:2))
-# 
-# library("cowplot")
-# ggdraw() +
-#   draw_plot(p1, x = 0, y = .5, width = .5, height = .5) +
-#   draw_plot(p2, x = .5, y = .5, width = .5, height = .5) +
-#   draw_plot(p3, x = 0, y = 0, width = 1, height = 0.5) +
-#   draw_plot_label(label = c("A", "B", "C"), size = 15,
-#                   x = c(0, 0.5, 0), y = c(1, 1, 0.5))
 
 
 #wondering if number of variants would be significant if we just looked at higher frequency variants
