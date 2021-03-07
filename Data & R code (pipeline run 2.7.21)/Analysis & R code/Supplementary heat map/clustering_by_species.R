@@ -6,7 +6,6 @@ library(dendextend)
 library(openxlsx)
 
 #start with data frame containing cleaned up variant table with combined replicates
-df <- read.xlsx('variant_summary_2.7.21.xlsx')
 df <- read.csv("variant_summary_processed.csv")
 
 #NAs to 0s for clustering purposes
@@ -19,7 +18,7 @@ row.names(mat) <- df$variant
 
 #default heatmap with all the variants on there (and all the replicates if you use that data)
 
-pdf(file="big_heatmap.pdf")
+pdf(file="heatmap.pdf")
 pheatmap(mat, fontsize_row = 5)
 dev.off()
 
