@@ -121,58 +121,44 @@ product_summary %>%
 #when you take all of the data together, M, orf1ab, and S are significant
 
 #now we can plot these results
-#(1) piN and piS for all datasets at a population level
-#(2) piN vs piS by species at a population level
-#(3) piN vs piS by protein across all datasets (at a gene level)
+#(1) piN and piS for all datasets at a population level, and piN vs piS by species at a population level
+#(2) piN vs piS by protein across all datasets (at a gene level)
 
-#(1) will be an inset within plot 2
-
-# plot1 <- ggpaired(df_pop, cond1 = "piN", cond2 = "piS",
-#          color = "condition", line.color = "gray", line.size = 1,point.size=6,
-#          palette="npg", xlab=FALSE, ylab=FALSE, legend="none")+
-#   stat_compare_means(paired = TRUE, method="t.test",
-#                      vjust=1, hjust=-0.3, size=16, label="p.format")
-# 
-# plot1 <- ggpar(plot1, ticks=FALSE, tickslab=FALSE)+ rremove("axis")
-# 
-# plot1
-# 
-# ggsave("selection_inset.pdf")
-
+#make another data frame with all the same data, but change the species to "all"
 dfpop <- df_pop
 
 dfpop <- dfpop %>%
   mutate(species="All")
 
+#then join the data frames together, now you have all the data, both broken down by species and as "all"
 df_pop <- full_join(dfpop, df_pop)
 
-#(2)
-options(scipen=8)
+#(1)
+options(scipen=8) #this helped with the scientific notation situation
 
-plot2 <- ggpaired(df_pop, cond1 = "piN", cond2 = "piS",
+plot1 <- ggpaired(df_pop, cond1 = "piN", cond2 = "piS",
          color = "condition", line.color = "gray", line.size = 0.4,
          palette="npg",xlab=FALSE, ylab=FALSE, legend="none", ylim=c(0, 0.00032))+
   facet_grid(cols=vars(species))+
   stat_compare_means(method="t.test", paired=TRUE, size=4, 
                      vjust=-2, label="p.format")
 
-plot2
+plot1
 
-#(3) 
+#(2) 
 #pull out the interesting genes
 df2 <- df_prod %>%
   filter(gene_product %in% c("S","orf1ab", "M"))
 
-plot3 <- ggpaired(df2, cond1 = "piN", cond2 = "piS",
+plot2 <- ggpaired(df2, cond1 = "piN", cond2 = "piS",
          color = "condition", line.color = "gray", line.size = 0.4,
          palette="npg",xlab=FALSE, ylab=FALSE, legend="none", ylim=c(0,0.0012))+
   facet_grid(cols=vars(gene_product))+
   stat_compare_means(method="t.test", paired=TRUE, size=4, 
                      vjust=-2, label="p.format")
 
-plot3
+plot2
 
 pdf("selection.pdf", onefile=F)
-ggarrange(plot2, plot3, ncol=1, nrow=2, labels="AUTO")
+ggarrange(plot1, plot2, ncol=1, nrow=2, labels="AUTO")
 dev.off()
-
